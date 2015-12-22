@@ -1,0 +1,61 @@
+.container {
+
+}
+
+@media (min-width: 1008px) {
+    .container {
+        width: 976px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1007px) {
+
+    .container {
+        margin-left: 3px;
+        margin-right: 3px;
+        width: 100%;
+    }
+
+
+    .big-story {
+        height: 300px;
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        /*width: 750px;*/
+        margin-left: 1px;
+        margin-right: 1px;
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+
+    .main-content, .main-content div {
+        padding: 0
+    }
+
+}
+
+.main-content, .main-content div {
+    padding: 0
+}
+
+.big-story {
+    border-bottom: 1px gray solid;
+}
+
+.medium-story {
+    border-right: 1px gray solid;
+}
+
+.small-story {
+    border-bottom: 1px gray solid;
+
+}
