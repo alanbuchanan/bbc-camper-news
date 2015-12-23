@@ -2,26 +2,30 @@
 
 @media (min-width: 1008px) {
     .container {
-        width: 976px;
+        width: 1076px;
         margin-left: auto;
         margin-right: auto;
         padding-left: 0;
         padding-right: 0;
     }
 }
+
 @media (min-width: 768px) and (max-width: 1007px) {
     .container {
         margin-left: 3px;
         margin-right: 3px;
         width: 100%;
     }
+
     .big-story {
         /*height: 300px;*/
     }
+
     .navbar {
         border-radius: 0px;
     }
 }
+
 @media (max-width: 767px) {
     .container {
         margin-left: 1px;
@@ -29,6 +33,7 @@
         padding-left: 5px;
         padding-right: 5px;
     }
+
     .main-content, .main-content div {
         padding: 0
     }
@@ -42,71 +47,38 @@ h4 {
     font-weight: bold;
 }
 
-.TimeAndLink a {
-    color: darkred;
-}
-
-.TimeAndLink a:hover {
-    color: #006699;
-    text-decoration: none;
-}
-
-.HeadlineLink a {
-    color: black;
-}
-
-.HeadlineLink a:hover {
-    color: #006699;
-    text-decoration: none;
-}
-.HeadlineLink a:visited {
-    color: dimgray;
+ul {
+    list-style-type: none;
 }
 
 #timeago {
     color: gray
 }
 
+.time-and-link a {
+    color: darkred;
+}
+
+.time-and-link a:hover {
+    color: #006699;
+    text-decoration: none;
+}
+
+.headline-link a {
+    color: black;
+}
+
+.headline-link a:hover {
+    color: #006699;
+    text-decoration: none;
+}
+
+.headline-link a:visited {
+    color: dimgray;
+}
+
 .main-content, .main-content div {
     padding: 0
-}
-
-.big-story {
-    border-bottom: 1px lightgray solid;
-    /*height: 370px*/
-}
-
-.medium-story {
-    border-right: 1px lightgray solid;
-    padding: 10px !important;
-}
-
-.small-story {
-    border-bottom: 1px lightgray solid;
-    padding: 10px !important;
-}
-
-.big-story div img {
-    margin-top: 20px;
-}
-
-.medium-story img {
-    max-height:150px;
-}
-
-.white-header {
-}
-
-.fccLogo {
-    line-height: 20px;
-    font-family: 'Lato', sans-serif;
-    font-size: 21px;
-    background-color: black;
-    color: white;
-    border-right: 3px solid white;
-    padding-right: 8px;
-    padding-left: 8px;
-    font-weight: 400;
 }
 
 nav {
@@ -123,7 +95,6 @@ nav li a {
     color: black !important;
 
 }
-
 
 .container-fluid {
     padding: 0;
@@ -145,6 +116,49 @@ nav li a {
     font-weight: 300;
 }
 
+.fccLogo {
+    line-height: 20px;
+    font-family: 'Lato', sans-serif;
+    font-size: 21px;
+    background-color: black;
+    color: white;
+    border-right: 3px solid white;
+    padding-right: 8px;
+    padding-left: 8px;
+    font-weight: 400;
+}
+
+.darkred-header {
+    background-color: darkred;
+    height: 20px;
+    margin: 0 -9999rem;
+    /* add back negative margin value */
+    padding: 0.25rem 9999rem;
+}
+
+.big-story div img {
+    margin-top: 20px;
+}
+
+.big-story {
+    border-bottom: 1px lightgray solid;
+    /*height: 370px*/
+}
+
+.medium-story {
+    border-right: 1px lightgray solid;
+    padding: 10px !important;
+}
+
+.medium-story img {
+    max-height: 150px;
+}
+
+.small-story {
+    border-bottom: 1px lightgray solid;
+    padding: 10px !important;
+}
+
 .dated-list-with-pics {
     overflow: hidden;
 }
@@ -161,16 +175,4 @@ nav li a {
 
 .dated-list-with-pics div {
     padding: 15px !important;
-}
-
-ul {
-    list-style-type: none;
-}
-
-.darkred-header {
-    background-color: darkred;
-    height: 20px;
-    margin: 0 -9999rem;
-    /* add back negative margin value */
-    padding: 0.25rem 9999rem;
 }

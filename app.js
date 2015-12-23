@@ -47,7 +47,6 @@ const BigStory = (props) => {
         headline = headline.split('—')[0]
     }
 
-    console.log('newsItems:', newsItems);
     return (
         <div className="big-story col-xs-12">
             <div className="col-sm-5">
@@ -89,7 +88,6 @@ const SmallStory = (props) => {
 };
 
 const DatedListNoPics = (props) => {
-    console.log('items from DatesListNoPics:', props.items);
 
     const {items} = props;
 
@@ -143,8 +141,8 @@ const TimeAndLink = (props) => {
     const timeago = $.timeago(props.time).replace(/(about)/gi, '');
 
     return (
-        <p className="TimeAndLink">
-            <span id="timeago">{timeago}</span> | <a href={link}>{props.author}</a>
+        <p className="time-and-link">
+            <span id="timeago"><i className="fa fa-clock-o"></i> {timeago}</span> | <a href={link}>{props.author}</a>
         </p>
     )
 };
@@ -157,8 +155,6 @@ const Loading = (props) => {
 
 const filterForImages = function (arr) {
 
-    console.log('arr:', arr);
-
     return arr.filter(e => {
         return e.image !== "";
     });
@@ -166,7 +162,7 @@ const filterForImages = function (arr) {
 
 const HeadlineLink = (props) => {
     return (
-        <div className="HeadlineLink">
+        <div className="headline-link">
             <a href={props.link}>{props.headline}</a>
         </div>
     )
@@ -186,7 +182,6 @@ const Main = React.createClass({
 
     getNewsItems () {
         $.getJSON('http://www.freecodecamp.com/news/hot', (data) => {
-            console.log('data sample:', data[11]);
             this.setState({newsItems: data})
         })
     },
@@ -202,7 +197,7 @@ const Main = React.createClass({
             listNoPics.push(this.state.newsItems[i]);
         }
 
-        for (let i = 12; i <= 30; i++) {
+        for (let i = 12; i <= 25; i++) {
             listWithPics.push(this.state.newsItems[i]);
         }
 
