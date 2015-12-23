@@ -43,6 +43,7 @@ html, body {
 
 .big-story {
     border-bottom: 1px gray solid;
+    height: 370px
 }
 
 .medium-story {
@@ -54,7 +55,7 @@ html, body {
 }
 
 .big-story div img {
-    height: 250px
+    height: 350px;
 }
 
 .medium-story img {

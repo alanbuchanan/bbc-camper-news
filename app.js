@@ -1,6 +1,5 @@
-
 var Header = React.createClass({
-    render: function () {
+    render() {
         return (
             <div>
                 <div className="white-header">
@@ -17,34 +16,38 @@ var Header = React.createClass({
 });
 
 
-
-
 var DatedListNoPics = React.createClass({
-    render: function () {
+    render () {
         return (
             <ul className="dated-list">
                 <li className="col-sm-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </li>
                 <li className="col-sm-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </li>
                 <li className="col-sm-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </li>
                 <li className="col-sm-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </li>
                 <li className="col-sm-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </li>
                 <li className="col-sm-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </li>
             </ul>
@@ -53,7 +56,7 @@ var DatedListNoPics = React.createClass({
 });
 
 var DatedListWithPics = React.createClass({
-    render: function () {
+    render () {
         return (
             <div className="col-md-6 col-lg-12">
                 <div className="col-md-6">
@@ -61,6 +64,7 @@ var DatedListWithPics = React.createClass({
                 </div>
                 <div className="col-md-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </div>
 
@@ -69,6 +73,7 @@ var DatedListWithPics = React.createClass({
                 </div>
                 <div className="col-md-6">
                     <h3>Headline</h3>
+
                     <p>time | link</p>
                 </div>
             </div>
@@ -77,7 +82,7 @@ var DatedListWithPics = React.createClass({
 });
 
 var Loading = React.createClass({
-    render: function () {
+    render () {
         return (
             <div>
                 <h1>LOADING</h1>
@@ -88,7 +93,7 @@ var Loading = React.createClass({
 
 
 var SmallStory = React.createClass({
-    render: function () {
+    render () {
         return (
             <div className="small-story">
                 <h3>{this.props.newsItems.headline}</h3>
@@ -100,11 +105,13 @@ var SmallStory = React.createClass({
 
 
 var MediumStory = React.createClass({
-    render: function () {
+    render () {
         return (
             <div className="medium-story col-sm-4 col-xs-12">
                 <img src={this.props.newsItems.image} alt=""/>
+
                 <h3>{this.props.newsItems.headline}</h3>
+
                 <p>{this.props.newsItems.metaDescription}</p>
                 <TimeAndLink time={this.props.newsItems.timePosted} author={this.props.newsItems.author.username}/>
             </div>
@@ -113,7 +120,7 @@ var MediumStory = React.createClass({
 });
 
 var TimeAndLink = React.createClass({
-    render: function () {
+    render () {
 
         var link = "http://www.freecodecamp.com/" + this.props.author;
         var timeago = $.timeago(this.props.time).replace(/(about)/gi, '');
@@ -128,13 +135,21 @@ var TimeAndLink = React.createClass({
 
 var BigStory = React.createClass({
 
-    render: function () {
+    render () {
+
+        let {headline} = this.props.newsItems;
+
+        if (headline.indexOf('—') !== -1) {
+            headline = headline.split('—')[0]
+        }
+
         console.log('props:', this.props);
         console.log('newsItems:', this.props.newsItems);
         return (
             <div className="big-story col-xs-12">
                 <div className="col-sm-5">
-                    <h1>{this.props.newsItems.headline}</h1>
+                    <h1>{headline}</h1>
+
                     <p>{this.props.newsItems.metaDescription}</p>
                     <TimeAndLink time={this.props.newsItems.timePosted} author={this.props.newsItems.author.username}/>
                 </div>
@@ -148,28 +163,29 @@ var BigStory = React.createClass({
 
 var Main = React.createClass({
 
-    getInitialState: function () {
+    getInitialState () {
         return {
             newsItems: []
         }
     },
 
-    componentDidMount: function () {
+    componentDidMount () {
         this.getNewsItems();
     },
 
-    getNewsItems: function () {
+    getNewsItems () {
         $.getJSON('http://www.freecodecamp.com/news/hot', (data) => {
             console.log('data sample:', data[0]);
             this.setState({newsItems: data})
         })
     },
 
-    render: function () {
+    render () {
         var loading = this.state.newsItems.length === 0;
         return (
             <div className="container">
                 <Header />
+
                 <div className="main-content col-sm-12">
                     <div className="left-sided-lg-top-otherwise col-lg-8 col-md-12 col-sm-12 col-xs-12">
                         {loading
