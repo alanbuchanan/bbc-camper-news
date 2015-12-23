@@ -53,8 +53,12 @@ html, body {
     border-bottom: 1px gray solid;
 }
 
-img {
-    width: 100%
+.big-story div img {
+    height: 250px
+}
+
+.medium-story img {
+    height:150px
 }
 
 .white-header {

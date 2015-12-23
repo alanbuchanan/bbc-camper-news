@@ -18,16 +18,6 @@ var Header = React.createClass({
 
 
 
-var SmallStory = React.createClass({
-    render: function () {
-        return (
-            <div className="small-story">
-                <h3>UK military deployed to Helamnd</h3>
-                <p>time | link</p>
-            </div>
-        );
-    }
-});
 
 var DatedListNoPics = React.createClass({
     render: function () {
@@ -94,7 +84,19 @@ var Loading = React.createClass({
             </div>
         )
     }
-})
+});
+
+
+var SmallStory = React.createClass({
+    render: function () {
+        return (
+            <div className="small-story">
+                <h3>{this.props.newsItems.headline}</h3>
+                <TimeAndLink time={this.props.newsItems.timePosted} author={this.props.newsItems.author.username}/>
+            </div>
+        );
+    }
+});
 
 
 var MediumStory = React.createClass({
@@ -104,11 +106,25 @@ var MediumStory = React.createClass({
                 <img src={this.props.newsItems.image} alt=""/>
                 <h3>{this.props.newsItems.headline}</h3>
                 <p>{this.props.newsItems.metaDescription}</p>
-                <p>time | link</p>
+                <TimeAndLink time={this.props.newsItems.timePosted} author={this.props.newsItems.author.username}/>
             </div>
         );
     }
 });
+
+var TimeAndLink = React.createClass({
+    render: function () {
+
+        var link = "http://www.freecodecamp.com/" + this.props.author;
+        var timeago = $.timeago(this.props.time).replace(/(about)/gi, '');
+
+        return (
+            <p>
+                {timeago} | <a href={link}>{this.props.author}</a>
+            </p>
+        )
+    }
+})
 
 var BigStory = React.createClass({
 
@@ -120,7 +136,7 @@ var BigStory = React.createClass({
                 <div className="col-sm-5">
                     <h1>{this.props.newsItems.headline}</h1>
                     <p>{this.props.newsItems.metaDescription}</p>
-                    <p>time | link</p>
+                    <TimeAndLink time={this.props.newsItems.timePosted} author={this.props.newsItems.author.username}/>
                 </div>
                 <div className="col-sm-7">
                     <img src={this.props.newsItems.image} alt=""/>
@@ -169,9 +185,18 @@ var Main = React.createClass({
                             : <MediumStory newsItems={this.state.newsItems[2]}/>
                         }
                         <div className="col-sm-4 col-xs-12">
-                            <SmallStory/>
-                            <SmallStory/>
-                            <SmallStory/>
+                            {loading
+                                ? <Loading />
+                                : <SmallStory newsItems={this.state.newsItems[3]}/>
+                            }
+                            {loading
+                                ? <Loading />
+                                : <SmallStory newsItems={this.state.newsItems[4]}/>
+                            }
+                            {loading
+                                ? <Loading />
+                                : <SmallStory newsItems={this.state.newsItems[5]}/>
+                            }
                         </div>
                         <DatedListNoPics/>
                     </div>
