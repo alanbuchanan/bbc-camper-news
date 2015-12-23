@@ -37,6 +37,35 @@ html, body {
     overflow-x: hidden;
 }
 
+h4 {
+    font-weight: bold;
+}
+
+.TimeAndLink a {
+    color: darkred;
+}
+
+.TimeAndLink a:hover {
+    color: #006699;
+    text-decoration: none;
+}
+
+.HeadlineLink a {
+    color: black;
+}
+
+.HeadlineLink a:hover {
+    color: #006699;
+    text-decoration: none;
+}
+.HeadlineLink a:visited {
+    color: dimgray;
+}
+
+#timeago {
+    color: gray
+}
+
 .main-content, .main-content div {
     padding: 0
 }
@@ -52,6 +81,7 @@ html, body {
 
 .small-story {
     border-bottom: 1px gray solid;
+    padding: 20px
 }
 
 .big-story div img {
