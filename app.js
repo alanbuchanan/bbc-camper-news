@@ -4,7 +4,9 @@ var Header = React.createClass({
         return (
             <div>
                 <div className="white-header">
-                    <h2>BBC</h2>
+                    <span>F</span>
+                    <span>C</span>
+                    <span>C</span>
                 </div>
                 <div className="red-header">
                     <h1>NEWS</h1>
@@ -15,18 +17,6 @@ var Header = React.createClass({
 });
 
 
-var MediumStory = React.createClass({
-    render: function () {
-        return (
-            <div className="medium-story col-sm-4 col-xs-12">
-                <img src="http://placehold.it/200x150" alt=""/>
-                <h3>Million people do a bunch of stuff UK</h3>
-                <p>few  ewejiio hhuhuihh uhn nu uini ny nyuyiuyiut it br5yvrytfytf bufi</p>
-                <p>time | link</p>
-            </div>
-        );
-    }
-});
 
 var SmallStory = React.createClass({
     render: function () {
@@ -96,16 +86,31 @@ var DatedListWithPics = React.createClass({
     }
 });
 
+var Loading = React.createClass({
+    render: function () {
+        return (
+            <div>
+                <h1>LOADING</h1>
+            </div>
+        )
+    }
+})
+
+
+var MediumStory = React.createClass({
+    render: function () {
+        return (
+            <div className="medium-story col-sm-4 col-xs-12">
+                <img src={this.props.newsItems.image} alt=""/>
+                <h3>{this.props.newsItems.headline}</h3>
+                <p>{this.props.newsItems.metaDescription}</p>
+                <p>time | link</p>
+            </div>
+        );
+    }
+});
+
 var BigStory = React.createClass({
-
-
-    getHeadline: function () {
-        if(this.props.newsItems){
-            return this.props.newsItems.headline
-        } else {
-            return null
-        }
-    },
 
     render: function () {
         console.log('props:', this.props);
@@ -113,12 +118,12 @@ var BigStory = React.createClass({
         return (
             <div className="big-story col-xs-12">
                 <div className="col-sm-5">
-                    <h1>{this.getHeadline()}</h1>
-                    <p>In Iraq, a bunch of stuff happens. Or so the media lead us to believe.</p>
+                    <h1>{this.props.newsItems.headline}</h1>
+                    <p>{this.props.newsItems.metaDescription}</p>
                     <p>time | link</p>
                 </div>
                 <div className="col-sm-7">
-                    <img src="http://placehold.it/320x220" alt=""/>
+                    <img src={this.props.newsItems.image} alt=""/>
                 </div>
             </div>
         );
@@ -145,14 +150,24 @@ var Main = React.createClass({
     },
 
     render: function () {
+        var loading = this.state.newsItems.length === 0;
         return (
             <div className="container">
                 <Header />
                 <div className="main-content col-sm-12">
                     <div className="left-sided-lg-top-otherwise col-lg-8 col-md-12 col-sm-12 col-xs-12">
-                        <BigStory newsItems={this.state.newsItems[0]}/>
-                        <MediumStory/>
-                        <MediumStory/>
+                        {loading
+                            ? <Loading />
+                            : <BigStory newsItems={this.state.newsItems[0]}/>
+                        }
+                        {loading
+                            ? <Loading />
+                            : <MediumStory newsItems={this.state.newsItems[1]}/>
+                        }
+                        {loading
+                            ? <Loading />
+                            : <MediumStory newsItems={this.state.newsItems[2]}/>
+                        }
                         <div className="col-sm-4 col-xs-12">
                             <SmallStory/>
                             <SmallStory/>
