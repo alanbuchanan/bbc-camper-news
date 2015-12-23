@@ -2,7 +2,7 @@
 
 @media (min-width: 1008px) {
     .container {
-        width: 1076px;
+        width: 976px;
         margin-left: auto;
         margin-right: auto;
         padding-left: 0;
@@ -15,10 +15,6 @@
         margin-left: 3px;
         margin-right: 3px;
         width: 100%;
-    }
-
-    .big-story {
-        /*height: 300px;*/
     }
 
     .navbar {
