@@ -16,7 +16,10 @@
         width: 100%;
     }
     .big-story {
-        height: 300px;
+        /*height: 300px;*/
+    }
+    .navbar {
+        border-radius: 0px;
     }
 }
 @media (max-width: 767px) {
@@ -24,7 +27,7 @@
         /*width: 750px;*/
         margin-left: 1px;
         margin-right: 1px;
-        width: 90%;
+        /*width: 90%;*/
         padding-left: 5px;
         padding-right: 5px;
     }
@@ -71,40 +74,62 @@ h4 {
 }
 
 .big-story {
-    border-bottom: 1px gray solid;
-    height: 370px
+    border-bottom: 1px lightgray solid;
+    /*height: 370px*/
 }
 
 .medium-story {
-    border-right: 1px gray solid;
+    border-right: 1px lightgray solid;
+    padding: 10px !important;
 }
 
 .small-story {
-    border-bottom: 1px gray solid;
-    padding: 20px
+    border-bottom: 1px lightgray solid;
+    padding: 10px !important;
 }
 
 .big-story div img {
-    height: 350px;
+    margin-top: 20px;
 }
 
 .medium-story img {
-    height:150px
+    max-height:150px;
+    /*max-width: 300px;*/
 }
 
 .white-header {
 }
 
-.white-header span {
-    line-height: 40px;
+.fccLogo {
+    line-height: 20px;
     font-family: 'Lato', sans-serif;
-    font-size: 25px;
+    font-size: 21px;
     background-color: black;
     color: white;
     border-right: 3px solid white;
     padding-right: 8px;
     padding-left: 8px;
-    font-weight: 300;
+    font-weight: 400;
+}
+
+nav {
+    margin-bottom: 0px !important;
+
+}
+
+nav li {
+    border-left: 1px solid lightgray;
+    font-weight: bold;
+}
+
+nav li a {
+    color: black !important;
+
+}
+
+
+.container-fluid {
+    padding: 0;
 }
 
 .red-header {
@@ -119,6 +144,27 @@ h4 {
     margin-bottom: 5px;
     color: white;
     font-family: 'Lato', sans-serif;
-    font-size: 40px;
+    font-size: 42px;
     font-weight: 300;
+}
+
+.DatedListWithPics img {
+    max-height: 90px;
+    margin-top: 20px !important;
+}
+
+.DatedListWithPics div {
+    padding: 5px !important;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.darkred-header {
+    background-color: darkred;
+    height: 20px;
+    margin: 0 -9999rem;
+    /* add back negative margin value */
+    padding: 0.25rem 9999rem;
 }

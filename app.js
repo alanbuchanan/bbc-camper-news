@@ -1,13 +1,39 @@
 var Header = (props) => {
     return (
-        <div>
-            <div className="white-header">
-                <span>F</span>
-                <span>C</span>
-                <span>C</span>
-            </div>
+        <div className="white-header">
+
+            <nav className="navbar">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                        <div className="navbar-brand" href="#">
+                            <span className="fccLogo">F</span>
+                            <span className="fccLogo">C</span>
+                            <span className="fccLogo">C</span>
+                        </div>
+                    </div>
+
+                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul className="nav navbar-nav">
+                            <li><a href="http://www.freecodecamp.com/">freecodecamp</a></li>
+                            <li><a href="http://www.bbc.co.uk/news">bbc news</a></li>
+                            <li><a href="http://github.com/alanbuchanan">github</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
             <div className="red-header">
                 <h1>NEWS</h1>
+            </div>
+
+            <div className="darkred-header">
+                <h1></h1>
             </div>
         </div>
     );
@@ -44,18 +70,21 @@ var HeadlineLink = (props) => {
 var SmallStory = (props) => {
     return (
         <div className="small-story">
-            <h4>{props.newsItems.headline}</h4>
+            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link} /></h4>
             <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
         </div>
     );
 };
 
 var MediumStory = (props) => {
-    return (
-        <div className="medium-story col-sm-4 col-xs-12">
-            <img src={props.newsItems.image} alt=""/>
 
-            <h4>{props.newsItems.headline}</h4>
+    let {newsItems} = props;
+
+    return (
+        <div className="medium-story col-sm-4 col-xs-6">
+            <img className="img-responsive" src={props.newsItems.image} alt=""/>
+
+            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link} /></h4>
 
             <p>{props.newsItems.metaDescription}</p>
             <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
@@ -65,8 +94,8 @@ var MediumStory = (props) => {
 
 var BigStory = (props) => {
 
-        let {headline} = props.newsItems;
         let {newsItems} = props;
+        let {headline} = newsItems;
 
         if (headline.indexOf('—') !== -1) {
             headline = headline.split('—')[0]
@@ -81,24 +110,35 @@ var BigStory = (props) => {
                     <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
                 </div>
                 <div className="col-sm-7">
-                    <img src={newsItems.image} alt=""/>
+                    <img className="img-responsive" src={newsItems.image} alt=""/>
                 </div>
             </div>
         );
+};
+
+var filterForImages = function (arr) {
+
+    console.log('arr:', arr);
+
+    return arr.filter(e => {
+        return e.image !== "";
+    });
 };
 
 var DatedListWithPics = (props) => {
 
     let {items} = props;
 
+    items = filterForImages(items);
+
     let list = items.map((e, i) => {
        return (
-           <div>
-               <div className="col-md-6" key={i}>
-                   <img src={e.image} alt=""/>
+           <div className="col-lg-12 col-md-6 col-sm-6" key={i}>
+               <div className="col-md-6 col-sm-6 col-xs-6">
+                   <img className="img-responsive" src={e.image} alt=""/>
                </div>
-               <div className="col-md-6">
-                    <h4>{e.headline}</h4>
+               <div className="col-md-6 col-sm-6 col-xs-6">
+                    <h4><HeadlineLink headline={e.headline} link={e.link} /></h4>
 
                    <TimeAndLink time={e.timePosted} author={e.author.username}/>
                </div>
@@ -107,7 +147,7 @@ var DatedListWithPics = (props) => {
     });
 
     return (
-        <div className="col-md-6 col-lg-12">
+        <div className="DatedListWithPics">
             {list}
         </div>
     );
@@ -121,7 +161,7 @@ var DatedListNoPics = (props) => {
     let list = items.map((e, i) => {
         return (
             <li className="col-sm-6" key={i}>
-                <h5>{e.headline}</h5>
+                <h5><HeadlineLink headline={e.headline} link={e.link} /></h5>
                 <TimeAndLink time={e.timePosted} author={e.author.username} />
             </li>
         )
@@ -148,21 +188,24 @@ let Main = React.createClass({
 
     getNewsItems () {
         $.getJSON('http://www.freecodecamp.com/news/hot', (data) => {
-            console.log('data sample:', data[0]);
+            console.log('data sample:', data[11]);
             this.setState({newsItems: data})
         })
     },
+
+
 
     render () {
         const loading = this.state.newsItems.length === 0;
         let listNoPics = [];
         let listWithPics = [];
 
+        // This is done in the render to avoid further ternary operators due to loading, as below
         for(let i = 6; i <= 11; i++) {
             listNoPics.push(this.state.newsItems[i]);
         }
 
-        for(let i = 12; i <= 20; i++) {
+        for(let i = 12; i <= 30; i++) {
             listWithPics.push(this.state.newsItems[i]);
         }
 
