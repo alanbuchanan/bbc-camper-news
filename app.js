@@ -1,15 +1,14 @@
-var Header = (props) => {
+const Header = (props) => {
     return (
         <div className="white-header">
-
+            {/* Bootstrap nav */}
             <nav className="navbar">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
+                            <i className="fa fa-bars icon-bar"></i>
                         </button>
                         <div className="navbar-brand" href="#">
                             <span className="fccLogo">F</span>
@@ -39,17 +38,108 @@ var Header = (props) => {
     );
 };
 
-var Loading = (props) => {
+const BigStory = (props) => {
+
+    const {newsItems} = props;
+    let {headline} = newsItems;
+
+    if (headline.indexOf('—') !== -1) {
+        headline = headline.split('—')[0]
+    }
+
+    console.log('newsItems:', newsItems);
     return (
-        <div>
-            <h1></h1>
+        <div className="big-story col-xs-12">
+            <div className="col-sm-5">
+                <h1><HeadlineLink headline={headline} link={newsItems.link}/></h1>
+
+                <p>{newsItems.metaDescription}</p>
+                <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
+            </div>
+            <div className="col-sm-7">
+                <img className="img-responsive" src={newsItems.image} alt=""/>
+            </div>
         </div>
-    )
+    );
 };
 
-var TimeAndLink = (props) => {
+const MediumStory = (props) => {
 
-    const link = "http://www.freecodecamp.com/" + props.author;
+    const {newsItems} = props;
+
+    return (
+        <div className="medium-story col-sm-4 col-xs-6">
+            <img className="img-responsive" src={props.newsItems.image} alt=""/>
+
+            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link}/></h4>
+
+            <p>{props.newsItems.metaDescription}</p>
+            <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
+        </div>
+    );
+};
+
+const SmallStory = (props) => {
+    return (
+        <div className="small-story">
+            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link}/></h4>
+            <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
+        </div>
+    );
+};
+
+const DatedListNoPics = (props) => {
+    console.log('items from DatesListNoPics:', props.items);
+
+    const {items} = props;
+
+    const list = items.map((e, i) => {
+        return (
+            <li className="col-sm-6" key={i}>
+                <h5><HeadlineLink headline={e.headline} link={e.link}/></h5>
+                <TimeAndLink time={e.timePosted} author={e.author.username}/>
+            </li>
+        )
+    });
+
+    return (
+        <ul className="dated-list-no-pics">
+            {list}
+        </ul>
+    );
+};
+
+const DatedListWithPics = (props) => {
+
+    let {items} = props;
+
+    items = filterForImages(items);
+
+    const list = items.map((e, i) => {
+        return (
+            <div className="col-lg-12 col-md-6 col-sm-6" key={i}>
+                <div className="col-md-6 col-sm-6 col-xs-6">
+                    <img className="img-responsive" src={e.image} alt=""/>
+                </div>
+                <div className="col-md-6 col-sm-6 col-xs-6">
+                    <h4><HeadlineLink headline={e.headline} link={e.link}/></h4>
+
+                    <TimeAndLink time={e.timePosted} author={e.author.username}/>
+                </div>
+            </div>
+        )
+    });
+
+    return (
+        <div className="dated-list-with-pics">
+            {list}
+        </div>
+    );
+};
+
+const TimeAndLink = (props) => {
+
+    const link = `http://www.freecodecamp.com/${props.author}`;
     const timeago = $.timeago(props.time).replace(/(about)/gi, '');
 
     return (
@@ -59,64 +149,13 @@ var TimeAndLink = (props) => {
     )
 };
 
-var HeadlineLink = (props) => {
+const Loading = (props) => {
     return (
-        <div className="HeadlineLink">
-            <a href={props.link}>{props.headline}</a>
-        </div>
+        <div></div>
     )
 };
 
-var SmallStory = (props) => {
-    return (
-        <div className="small-story">
-            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link} /></h4>
-            <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
-        </div>
-    );
-};
-
-var MediumStory = (props) => {
-
-    let {newsItems} = props;
-
-    return (
-        <div className="medium-story col-sm-4 col-xs-6">
-            <img className="img-responsive" src={props.newsItems.image} alt=""/>
-
-            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link} /></h4>
-
-            <p>{props.newsItems.metaDescription}</p>
-            <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
-        </div>
-    );
-};
-
-var BigStory = (props) => {
-
-        let {newsItems} = props;
-        let {headline} = newsItems;
-
-        if (headline.indexOf('—') !== -1) {
-            headline = headline.split('—')[0]
-        }
-
-        console.log('newsItems:', newsItems);
-        return (
-            <div className="big-story col-xs-12">
-                <div className="col-sm-5">
-                    <h1><HeadlineLink headline={headline} link={newsItems.link} /></h1>
-                    <p>{newsItems.metaDescription}</p>
-                    <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
-                </div>
-                <div className="col-sm-7">
-                    <img className="img-responsive" src={newsItems.image} alt=""/>
-                </div>
-            </div>
-        );
-};
-
-var filterForImages = function (arr) {
+const filterForImages = function (arr) {
 
     console.log('arr:', arr);
 
@@ -125,56 +164,15 @@ var filterForImages = function (arr) {
     });
 };
 
-var DatedListWithPics = (props) => {
-
-    let {items} = props;
-
-    items = filterForImages(items);
-
-    let list = items.map((e, i) => {
-       return (
-           <div className="col-lg-12 col-md-6 col-sm-6" key={i}>
-               <div className="col-md-6 col-sm-6 col-xs-6">
-                   <img className="img-responsive" src={e.image} alt=""/>
-               </div>
-               <div className="col-md-6 col-sm-6 col-xs-6">
-                    <h4><HeadlineLink headline={e.headline} link={e.link} /></h4>
-
-                   <TimeAndLink time={e.timePosted} author={e.author.username}/>
-               </div>
-           </div>
-       )
-    });
-
+const HeadlineLink = (props) => {
     return (
-        <div className="DatedListWithPics">
-            {list}
+        <div className="HeadlineLink">
+            <a href={props.link}>{props.headline}</a>
         </div>
-    );
+    )
 };
 
-var DatedListNoPics = (props) => {
-    console.log('items from DatesListNoPics:', props.items);
-
-    let {items} = props;
-
-    let list = items.map((e, i) => {
-        return (
-            <li className="col-sm-6" key={i}>
-                <h5><HeadlineLink headline={e.headline} link={e.link} /></h5>
-                <TimeAndLink time={e.timePosted} author={e.author.username} />
-            </li>
-        )
-    });
-
-    return (
-        <ul className="dated-list">
-            {list}
-        </ul>
-    );
-};
-
-let Main = React.createClass({
+const Main = React.createClass({
 
     getInitialState () {
         return {
@@ -194,18 +192,17 @@ let Main = React.createClass({
     },
 
 
-
     render () {
         const loading = this.state.newsItems.length === 0;
         let listNoPics = [];
         let listWithPics = [];
 
         // This is done in the render to avoid further ternary operators due to loading, as below
-        for(let i = 6; i <= 11; i++) {
+        for (let i = 6; i <= 11; i++) {
             listNoPics.push(this.state.newsItems[i]);
         }
 
-        for(let i = 12; i <= 30; i++) {
+        for (let i = 12; i <= 30; i++) {
             listWithPics.push(this.state.newsItems[i]);
         }
 

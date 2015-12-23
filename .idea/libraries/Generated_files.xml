@@ -3,10 +3,14 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/app-compiled.js" />
+        <item url="file://$PROJECT_DIR$/bower_components/underscore/underscore-min-compiled.js" />
+        <item url="file://$PROJECT_DIR$/bower_components/underscore/underscore-compiled.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/app-compiled.js" />
+      <root url="file://$PROJECT_DIR$/bower_components/underscore/underscore-min-compiled.js" />
+      <root url="file://$PROJECT_DIR$/bower_components/underscore/underscore-compiled.js" />
     </CLASSES>
     <SOURCES />
   </library>
