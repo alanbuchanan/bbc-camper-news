@@ -129,7 +129,7 @@ const DatedListWithPics = (props) => {
                     <TimeAndLink time={e.timePosted} author={e.author.username}/>
                 </div>
             </div>
-        )
+        );
     });
 
     return (
@@ -141,16 +141,16 @@ const DatedListWithPics = (props) => {
 
 // Helpers and mini components
 
-const splitHeadlineAtUnwantedChar = (str) => { return str.indexOf('—') !== -1 ? str.split('—')[0] : str; };
-const filterForImages = (arr) => { return arr.filter(e => e.image !== ""); };
-const Loading = () => { return (<div></div>); };
+const splitHeadlineAtUnwantedChar = (str) => str.indexOf('—') !== -1 ? str.split('—')[0] : str;
+const filterForImages = (arr) => arr.filter(e => e.image !== "");
+const Loading = () => <div></div>;
 
 const TimeAndLink = (props) => {
     return (
         <p className="time-and-link">
             <span id="timeago"><i className="fa fa-clock-o"></i> {$.timeago(props.time).replace(/(about)/gi, '')}</span> | <a href={`http://www.freecodecamp.com/${props.author}`}>{props.author}</a>
         </p>
-    )
+    );
 };
 
 const HeadlineLink = (props) => {
@@ -158,7 +158,7 @@ const HeadlineLink = (props) => {
         <div className="headline-link">
             <a href={props.link}>{props.headline}</a>
         </div>
-    )
+    );
 };
 
 const Main = React.createClass({
@@ -176,7 +176,7 @@ const Main = React.createClass({
     getNewsItems () {
         $.getJSON('http://www.freecodecamp.com/news/hot', (data) => {
             this.setState({newsItems: data})
-        })
+        });
     },
 
     render () {

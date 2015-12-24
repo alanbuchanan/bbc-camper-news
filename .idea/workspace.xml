@@ -49,8 +49,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4382716">
-              <caret line="172" column="28" selection-start-line="172" selection-start-column="28" selection-end-line="172" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.7407407">
+              <caret line="240" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="248" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -283,7 +283,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450914037112</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refactored. shorter helper functions, altered main functions">
+      <created>1450922475501</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1450922475501</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -335,7 +341,8 @@
     <MESSAGE value="further design fixes" />
     <MESSAGE value="increased width on larger screens. removed console logs. added font awesome clock" />
     <MESSAGE value="style fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="style fixes" />
+    <MESSAGE value="refactored. shorter helper functions, altered main functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored. shorter helper functions, altered main functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -386,8 +393,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4382716">
-          <caret line="172" column="28" selection-start-line="172" selection-start-column="28" selection-end-line="172" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.7407407">
+          <caret line="240" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="248" selection-end-column="59" />
           <folding />
         </state>
       </provider>
