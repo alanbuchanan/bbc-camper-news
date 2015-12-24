@@ -43,9 +43,7 @@ const BigStory = (props) => {
     const {newsItems} = props;
     let {headline} = newsItems;
 
-    if (headline.indexOf('—') !== -1) {
-        headline = headline.split('—')[0]
-    }
+    headline = splitHeadlineAtUnwantedChar(headline);
 
     return (
         <div className="big-story col-xs-12">
@@ -66,23 +64,29 @@ const MediumStory = (props) => {
 
     const {newsItems} = props;
 
+    newsItems.headline = splitHeadlineAtUnwantedChar(newsItems.headline);
+
     return (
         <div className="medium-story col-sm-4 col-xs-6">
-            <img className="img-responsive" src={props.newsItems.image} alt=""/>
+            <img className="img-responsive" src={newsItems.image} alt=""/>
 
-            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link}/></h4>
+            <h4><HeadlineLink headline={newsItems.headline} link={newsItems.link}/></h4>
 
-            <p>{props.newsItems.metaDescription}</p>
-            <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
+            <p>{newsItems.metaDescription}</p>
+            <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
         </div>
     );
 };
 
 const SmallStory = (props) => {
+
+    const {newsItems} = props;
+    newsItems.headline = splitHeadlineAtUnwantedChar(newsItems.headline);
+
     return (
         <div className="small-story">
-            <h4><HeadlineLink headline={props.newsItems.headline} link={props.newsItems.link}/></h4>
-            <TimeAndLink time={props.newsItems.timePosted} author={props.newsItems.author.username}/>
+            <h4><HeadlineLink headline={newsItems.headline} link={newsItems.link}/></h4>
+            <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
         </div>
     );
 };
@@ -94,7 +98,7 @@ const DatedListNoPics = (props) => {
     const list = items.map((e, i) => {
         return (
             <li className="col-sm-6" key={i}>
-                <h5><HeadlineLink headline={e.headline} link={e.link}/></h5>
+                <h5><HeadlineLink headline={splitHeadlineAtUnwantedChar(e.headline)} link={e.link}/></h5>
                 <TimeAndLink time={e.timePosted} author={e.author.username}/>
             </li>
         )
@@ -120,7 +124,7 @@ const DatedListWithPics = (props) => {
                     <img className="img-responsive" src={e.image} alt=""/>
                 </div>
                 <div className="col-md-6 col-sm-6 col-xs-6">
-                    <h4><HeadlineLink headline={e.headline} link={e.link}/></h4>
+                    <h4><HeadlineLink headline={splitHeadlineAtUnwantedChar(e.headline)} link={e.link}/></h4>
 
                     <TimeAndLink time={e.timePosted} author={e.author.username}/>
                 </div>
@@ -135,29 +139,18 @@ const DatedListWithPics = (props) => {
     );
 };
 
+// Helpers and mini components
+
+const splitHeadlineAtUnwantedChar = (str) => { return str.indexOf('—') !== -1 ? str.split('—')[0] : str; };
+const filterForImages = (arr) => { return arr.filter(e => e.image !== ""); };
+const Loading = () => { return (<div></div>); };
+
 const TimeAndLink = (props) => {
-
-    const link = `http://www.freecodecamp.com/${props.author}`;
-    const timeago = $.timeago(props.time).replace(/(about)/gi, '');
-
     return (
         <p className="time-and-link">
-            <span id="timeago"><i className="fa fa-clock-o"></i> {timeago}</span> | <a href={link}>{props.author}</a>
+            <span id="timeago"><i className="fa fa-clock-o"></i> {$.timeago(props.time).replace(/(about)/gi, '')}</span> | <a href={`http://www.freecodecamp.com/${props.author}`}>{props.author}</a>
         </p>
     )
-};
-
-const Loading = (props) => {
-    return (
-        <div></div>
-    )
-};
-
-const filterForImages = function (arr) {
-
-    return arr.filter(e => {
-        return e.image !== "";
-    });
 };
 
 const HeadlineLink = (props) => {
@@ -186,19 +179,22 @@ const Main = React.createClass({
         })
     },
 
-
     render () {
-        const loading = this.state.newsItems.length === 0;
+        const {newsItems} = this.state;
+        const loading = newsItems.length === 0;
         let listNoPics = [];
         let listWithPics = [];
+        const storiesToShow = 25;
 
         // This is done in the render to avoid further ternary operators due to loading, as below
+        // List 1 (no pics):
         for (let i = 6; i <= 11; i++) {
-            listNoPics.push(this.state.newsItems[i]);
+            listNoPics.push(newsItems[i]);
         }
 
-        for (let i = 12; i <= 25; i++) {
-            listWithPics.push(this.state.newsItems[i]);
+        // List 2 (with pics):
+        for (let i = 12; i <= storiesToShow; i++) {
+            listWithPics.push(newsItems[i]);
         }
 
         return (
@@ -209,28 +205,28 @@ const Main = React.createClass({
                     <div className="left-sided-lg-top-otherwise col-lg-8 col-md-12 col-sm-12 col-xs-12">
                         {loading
                             ? <Loading />
-                            : <BigStory newsItems={this.state.newsItems[0]}/>
+                            : <BigStory newsItems={newsItems[0]}/>
                         }
                         {loading
                             ? <Loading />
-                            : <MediumStory newsItems={this.state.newsItems[1]}/>
+                            : <MediumStory newsItems={newsItems[1]}/>
                         }
                         {loading
                             ? <Loading />
-                            : <MediumStory newsItems={this.state.newsItems[2]}/>
+                            : <MediumStory newsItems={newsItems[2]}/>
                         }
                         <div className="col-sm-4 col-xs-12">
                             {loading
                                 ? <Loading />
-                                : <SmallStory newsItems={this.state.newsItems[3]}/>
+                                : <SmallStory newsItems={newsItems[3]}/>
                             }
                             {loading
                                 ? <Loading />
-                                : <SmallStory newsItems={this.state.newsItems[4]}/>
+                                : <SmallStory newsItems={newsItems[4]}/>
                             }
                             {loading
                                 ? <Loading />
-                                : <SmallStory newsItems={this.state.newsItems[5]}/>
+                                : <SmallStory newsItems={newsItems[5]}/>
                             }
                         </div>
                         {loading
