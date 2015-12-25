@@ -1,4 +1,4 @@
-const Header = (props) => {
+const Header = () => {
     return (
         <div className="white-header">
             {/* Bootstrap nav */}
@@ -40,6 +40,8 @@ const Header = (props) => {
 
 const BigStory = (props) => {
 
+    console.log('props:', props);
+
     const {newsItems} = props;
     let {headline} = newsItems;
 
@@ -80,13 +82,29 @@ const MediumStory = (props) => {
 
 const SmallStory = (props) => {
 
-    const {newsItems} = props;
-    newsItems.headline = splitHeadlineAtUnwantedChar(newsItems.headline);
+    const {items} = props;
+
+    const list = items.map((e, i) => {
+        return (
+            <div className="small-story" key={i}>
+                <CombinedHeadlineTimeLink headline={e.headline} link={e.link} time={e.timePosted} author={e.author.username}/>
+            </div>
+        );
+    });
 
     return (
-        <div className="small-story">
-            <h4><HeadlineLink headline={newsItems.headline} link={newsItems.link}/></h4>
-            <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
+        <div>
+            {list}
+        </div>
+    );
+
+};
+
+const CombinedHeadlineTimeLink = (props) => {
+    return (
+        <div>
+            <h4><HeadlineLink headline={splitHeadlineAtUnwantedChar(props.headline)} link={props.link}/></h4>
+            <TimeAndLink time={props.time} author={props.author}/>
         </div>
     );
 };
@@ -98,10 +116,9 @@ const DatedListNoPics = (props) => {
     const list = items.map((e, i) => {
         return (
             <li className="col-sm-6" key={i}>
-                <h5><HeadlineLink headline={splitHeadlineAtUnwantedChar(e.headline)} link={e.link}/></h5>
-                <TimeAndLink time={e.timePosted} author={e.author.username}/>
+                <CombinedHeadlineTimeLink headline={e.headline} link={e.link} time={e.timePosted} author={e.author.username}/>
             </li>
-        )
+        );
     });
 
     return (
@@ -141,14 +158,14 @@ const DatedListWithPics = (props) => {
 
 // Helpers and mini components
 
-const splitHeadlineAtUnwantedChar = (str) => str.indexOf('—') !== -1 ? str.split('—')[0] : str;
+const splitHeadlineAtUnwantedChar = (str) => str.indexOf("—") !== -1 ? str.split("—")[0] : str;
 const filterForImages = (arr) => arr.filter(e => e.image !== "");
 const Loading = () => <div></div>;
 
 const TimeAndLink = (props) => {
     return (
         <p className="time-and-link">
-            <span id="timeago"><i className="fa fa-clock-o"></i> {$.timeago(props.time).replace(/(about)/gi, '')}</span> | <a href={`http://www.freecodecamp.com/${props.author}`}>{props.author}</a>
+            <span id="timeago"><i className="fa fa-clock-o"></i> {$.timeago(props.time).replace(/(about)/gi, "")}</span> | <a href={`http://www.freecodecamp.com/${props.author}`}>{props.author}</a>
         </p>
     );
 };
@@ -166,7 +183,7 @@ const Main = React.createClass({
     getInitialState () {
         return {
             newsItems: []
-        }
+        };
     },
 
     componentDidMount () {
@@ -174,28 +191,22 @@ const Main = React.createClass({
     },
 
     getNewsItems () {
-        $.getJSON('http://www.freecodecamp.com/news/hot', (data) => {
-            this.setState({newsItems: data})
+        $.getJSON("http://www.freecodecamp.com/news/hot", (data) => {
+            this.setState({newsItems: data});
         });
     },
 
     render () {
         const {newsItems} = this.state;
         const loading = newsItems.length === 0;
-        let listNoPics = [];
-        let listWithPics = [];
         const storiesToShow = 25;
-
-        // This is done in the render to avoid further ternary operators due to loading, as below
-        // List 1 (no pics):
-        for (let i = 6; i <= 11; i++) {
-            listNoPics.push(newsItems[i]);
-        }
-
-        // List 2 (with pics):
-        for (let i = 12; i <= storiesToShow; i++) {
-            listWithPics.push(newsItems[i]);
-        }
+        //TODO: continue refactoring as per helpful codereview comment ( have done msallstory and lists)
+        const storyMapper   = (i) => newsItems[i];
+        const bigStories    = _.range(0, 1).map(storyMapper);
+        const mediumStories = _.range(1, 3).map(storyMapper);
+        const smallStories  = _.range(3, 6).map(storyMapper);
+        const listNoPics    = _.range(6, 11).map(storyMapper);
+        const listWithPics  = _.range(12, storiesToShow).map(storyMapper);
 
         return (
             <div className="container">
@@ -218,17 +229,10 @@ const Main = React.createClass({
                         <div className="col-sm-4 col-xs-12">
                             {loading
                                 ? <Loading />
-                                : <SmallStory newsItems={newsItems[3]}/>
-                            }
-                            {loading
-                                ? <Loading />
-                                : <SmallStory newsItems={newsItems[4]}/>
-                            }
-                            {loading
-                                ? <Loading />
-                                : <SmallStory newsItems={newsItems[5]}/>
+                                : <SmallStory items={smallStories}/>
                             }
                         </div>
+
                         {loading
                             ? <Loading />
                             : <DatedListNoPics items={listNoPics}/>
@@ -246,4 +250,4 @@ const Main = React.createClass({
     }
 });
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+ReactDOM.render(<Main />, document.getElementById("root"));
