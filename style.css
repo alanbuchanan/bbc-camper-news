@@ -144,6 +144,7 @@ nav li a {
 .medium-story {
     border-right: 1px lightgray solid;
     padding: 10px !important;
+    /*min-height: 400px;*/
 }
 
 .medium-story img {

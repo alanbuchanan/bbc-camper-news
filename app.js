@@ -40,42 +40,52 @@ const Header = () => {
 
 const BigStory = (props) => {
 
-    console.log('props:', props);
+    const {items} = props;
 
-    const {newsItems} = props;
-    let {headline} = newsItems;
+    const list = items.map((e, i) => {
+        return (
+            <div className="big-story col-xs-12" key={i}>
+                <div className="col-sm-5">
+                    <h1><HeadlineLink headline={splitHeadlineAtUnwantedChar(e.headline)} link={e.link}/></h1>
 
-    headline = splitHeadlineAtUnwantedChar(headline);
+                    <p>{e.metaDescription}</p>
+                    <TimeAndLink time={e.timePosted} author={e.author.username}/>
+                </div>
+                <div className="col-sm-7">
+                    <img className="img-responsive" src={e.image} alt=""/>
+                </div>
+            </div>
+        );
+    });
 
     return (
-        <div className="big-story col-xs-12">
-            <div className="col-sm-5">
-                <h1><HeadlineLink headline={headline} link={newsItems.link}/></h1>
-
-                <p>{newsItems.metaDescription}</p>
-                <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
-            </div>
-            <div className="col-sm-7">
-                <img className="img-responsive" src={newsItems.image} alt=""/>
-            </div>
+        <div>
+            {list}
         </div>
     );
+
 };
 
 const MediumStory = (props) => {
 
-    const {newsItems} = props;
+    const {items} = props;
 
-    newsItems.headline = splitHeadlineAtUnwantedChar(newsItems.headline);
+    const list = items.map((e, i) => {
+        return (
+            <div className="medium-story col-sm-4 col-xs-6" key={i}>
+                <img className="img-responsive" src={e.image} alt=""/>
+
+                <h4><HeadlineLink headline={splitHeadlineAtUnwantedChar(e.headline)} link={e.link}/></h4>
+
+                <p>{e.metaDescription}</p>
+                <TimeAndLink time={e.timePosted} author={e.author.username}/>
+            </div>
+        );
+    });
 
     return (
-        <div className="medium-story col-sm-4 col-xs-6">
-            <img className="img-responsive" src={newsItems.image} alt=""/>
-
-            <h4><HeadlineLink headline={newsItems.headline} link={newsItems.link}/></h4>
-
-            <p>{newsItems.metaDescription}</p>
-            <TimeAndLink time={newsItems.timePosted} author={newsItems.author.username}/>
+        <div>
+            {list}
         </div>
     );
 };
@@ -100,15 +110,6 @@ const SmallStory = (props) => {
 
 };
 
-const CombinedHeadlineTimeLink = (props) => {
-    return (
-        <div>
-            <h4><HeadlineLink headline={splitHeadlineAtUnwantedChar(props.headline)} link={props.link}/></h4>
-            <TimeAndLink time={props.time} author={props.author}/>
-        </div>
-    );
-};
-
 const DatedListNoPics = (props) => {
 
     const {items} = props;
@@ -122,7 +123,7 @@ const DatedListNoPics = (props) => {
     });
 
     return (
-        <ul className="dated-list-no-pics">
+        <ul className="dated-list-no-pics col-lg-12 col-md-12 col-sm-12 col-xs-12">
             {list}
         </ul>
     );
@@ -178,6 +179,15 @@ const HeadlineLink = (props) => {
     );
 };
 
+const CombinedHeadlineTimeLink = (props) => {
+    return (
+        <div>
+            <h4><HeadlineLink headline={splitHeadlineAtUnwantedChar(props.headline)} link={props.link}/></h4>
+            <TimeAndLink time={props.time} author={props.author}/>
+        </div>
+    );
+};
+
 const Main = React.createClass({
 
     getInitialState () {
@@ -200,7 +210,6 @@ const Main = React.createClass({
         const {newsItems} = this.state;
         const loading = newsItems.length === 0;
         const storiesToShow = 25;
-        //TODO: continue refactoring as per helpful codereview comment ( have done msallstory and lists)
         const storyMapper   = (i) => newsItems[i];
         const bigStories    = _.range(0, 1).map(storyMapper);
         const mediumStories = _.range(1, 3).map(storyMapper);
@@ -216,15 +225,11 @@ const Main = React.createClass({
                     <div className="left-sided-lg-top-otherwise col-lg-8 col-md-12 col-sm-12 col-xs-12">
                         {loading
                             ? <Loading />
-                            : <BigStory newsItems={newsItems[0]}/>
+                            : <BigStory items={bigStories}/>
                         }
                         {loading
                             ? <Loading />
-                            : <MediumStory newsItems={newsItems[1]}/>
-                        }
-                        {loading
-                            ? <Loading />
-                            : <MediumStory newsItems={newsItems[2]}/>
+                            : <MediumStory items={mediumStories}/>
                         }
                         <div className="col-sm-4 col-xs-12">
                             {loading
